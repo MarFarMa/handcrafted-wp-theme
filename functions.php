@@ -8,10 +8,10 @@
  * Make theme available for translation
  * Translations can be filed in the /languages/ directory
  */
-load_theme_textdomain( 'themename', TEMPLATEPATH . '/languages' );
+load_theme_textdomain( 'themename', get_template_directory() . '/languages' );
 
 $locale = get_locale();
-$locale_file = TEMPLATEPATH . "/languages/$locale.php";
+$locale_file = get_template_directory() . "/languages/$locale.php";
 if ( is_readable( $locale_file ) )
 	require_once( $locale_file );
 
@@ -229,4 +229,44 @@ function cpt_icons() {
             background-position:6px 7px!important;
         }
     </style>
-<?php }*/ ?>
+<?php }*/ 
+
+/*
+
+Load up the scripts
+
+*/
+
+function weekend_hacker_scripts(){
+
+// load scripts on front-end only
+if( is_admin() ){ return; }
+
+//	$aBootstrapJsOptions = array (
+//		'alerts'	=> self::getOption( 'alerts_js' ),
+//		'dropdown'	=> self::getOption( 'dropdown_js' ),
+//		'modal'		=> self::getOption( 'modal_js' ),
+//		'popover'	=> self::getOption( 'popover_js' ),
+//		'scrollspy'	=> self::getOption( 'scrollspy_js' ),
+//		'tabs'		=> self::getOption( 'tabs_js' ),
+//		'twipsy'	=> self::getOption( 'twipsy_js' ),
+//	);
+
+wp_deregister_script('jquery');
+
+wp_register_script('jquery', 'http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js', false, '1.6.2');
+wp_enqueue_script('jquery');
+
+// enqueue the script
+wp_enqueue_script('custom_script');
+
+wp_register_script('dropdown', 
+                    get_template_directory_uri() .'/js/twitter-1.3.0/bootstrap-dropdown.js', 
+                    false, '1.0');
+wp_enqueue_script('dropdown');
+
+}
+
+add_action('wp_enqueue_scripts', 'weekend_hacker_scripts');
+
+?>

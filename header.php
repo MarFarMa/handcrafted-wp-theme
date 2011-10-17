@@ -45,7 +45,8 @@
 	<link rel="apple-touch-icon" href="<?php echo get_template_directory_uri(); ?>/images/apple-touch-icon.png"><!--60X60-->
 	
 	<link rel="profile" href="http://gmpg.org/xfn/11" />
-    <link rel="stylesheet" href="<?php bloginfo('stylesheet_url'); echo '?' . filemtime( get_stylesheet_directory() . '/style.css'); ?>" type="text/css" media="screen, projection" />
+	<link rel="stylesheet" href="http://twitter.github.com/bootstrap/1.3.0/bootstrap.min.css">
+  <link rel="stylesheet" href="<?php bloginfo('stylesheet_url'); echo '?' . filemtime( get_stylesheet_directory() . '/style.css'); ?>" type="text/css" media="screen, projection" />
 
 	<?php if ( is_singular() && get_option( 'thread_comments' ) ) wp_enqueue_script( 'comment-reply' ); ?>
 	<link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>" />
@@ -60,15 +61,54 @@
 	<body <?php body_class(); ?>>
 	<div id="page" class="hfeed">
 		<header id="branding" role="banner">
-				<hgroup>
-					<h1 id="site-title"><span><a href="<?php echo home_url( '/' ); ?>" title="<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></span></h1>
-					<h2 id="site-description"><?php bloginfo( 'description' ); ?></h2>
-				</hgroup>
-				
-				<nav id="utility" role="article">
-					<?php wp_nav_menu( array( 'theme_location' => 'utility' ) ); ?>
-				</nav><!-- #utility -->
-	
+
+        <nav style="z-index: 5;" class="topbar-wrapper">
+            <div data-dropdown="dropdown" class="topbar">
+              <div class="topbar-inner">
+                <div class="container">
+                  <h3><a href="<?php echo home_url( '/' ); ?>">Home</a></h3>
+                  <ul class="nav">
+                    <li><a href="#">Link</a></li>
+                    <li><a href="#">Link</a></li>
+                    <li><a href="#">Link</a></li>
+                    <li class="dropdown">
+                      <a class="dropdown-toggle" href="#">Dropdown</a>
+                      <ul class="dropdown-menu">
+                        <li><a href="#">Secondary link</a></li>
+                        <li><a href="#">Something else here</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#">Another link</a></li>
+                      </ul>
+                    </li>
+                  </ul>
+                  <ul class="nav secondary-nav">
+                    <li class="dropdown">
+                      <a class="dropdown-toggle" href="#">Dropdown</a>
+                        
+                        <?php $defaults = array(
+                          'theme_location'  => 'utility',
+                          'container'       => false, 
+                          'menu_class'      => 'dropdown-menu', 
+                          'echo'            => true
+                           );
+                          wp_nav_menu( $defaults ); ?>
+                          
+                    </li>
+                  </ul>
+                </div>
+              </div><!-- /topbar-inner -->
+            </div><!-- /topbar -->
+          </nav>
+
+  				<hgroup class="jumbotron masthead">
+            <div class="inner">
+              <div class="container">
+                <h1><a href="<?php echo home_url( '/' ); ?>" title="<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></h1>
+      					<p class="lead"><?php bloginfo( 'description' ); ?></p>
+              </div><!-- /container -->
+            </div>
+      		</hgroup>
+
 				<nav id="access" role="article">
 					<h1 class="section-heading"><?php _e( 'Main menu', 'themename' ); ?></h1>
 					<div class="skip-link visuallyhidden"><a href="#content" title="<?php esc_attr_e( 'Skip to content', 'themename' ); ?>"><?php _e( 'Skip to content', 'themename' ); ?></a></div>
@@ -77,4 +117,4 @@
 		</header><!-- #branding -->
 	
 	
-		<div id="main">
+		<div id="main" class="container-fluid">
